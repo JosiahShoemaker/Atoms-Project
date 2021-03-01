@@ -15,8 +15,15 @@ public class ElectronRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        electronPivotArray[0].transform.Rotate(new Vector3(0, 1, 0));
-        electronPivotArray[1].transform.Rotate(new Vector3(0, 1, 0));
-
+        switch(electronPivotArray.Length)
+        {
+            case 1:
+                electronPivotArray[0].transform.Rotate(new Vector3(0, 1, 0));
+                break;
+            case 2:
+                electronPivotArray[0].transform.Rotate(new Vector3(0, 1, 0));
+                electronPivotArray[1].transform.Rotate(new Vector3(0, 1, 0));
+                break;
+        }
     }
 }
