@@ -27,6 +27,8 @@ public class AtomsManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Return))
         {
+            feedbackText.text = "";
+            Destroy(lastCreatedAtom);
             switch(inputString)
             {
                 case "hydrogen":
@@ -34,6 +36,21 @@ public class AtomsManager : MonoBehaviour
                     break;
                 case "helium":
                     lastCreatedAtom = Instantiate(atomsArray[1]);
+                    break;
+                case "iron":
+                    lastCreatedAtom = Instantiate(atomsArray[2]);
+                    break;
+                case "lithium":
+                    lastCreatedAtom = Instantiate(atomsArray[3]);
+                    break;
+                case "beryllium":
+                    lastCreatedAtom = Instantiate(atomsArray[4]);
+                    break;
+                case "boron":
+                    lastCreatedAtom = Instantiate(atomsArray[5]);
+                    break;
+                case "carbon":
+                    lastCreatedAtom = Instantiate(atomsArray[6]);
                     break;
                 default:
                     feedbackText.text = inputString + " is not an element in the array"; 
