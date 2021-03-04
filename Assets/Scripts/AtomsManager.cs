@@ -14,11 +14,6 @@ public class AtomsManager : MonoBehaviour
     public Text inputText;
 
     public Text feedbackText;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ElectronRotate2 : MonoBehaviour
 {
-  
-
     // Update is called once per frame
     void Update()
     {

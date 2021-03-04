@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AtomCreator : MonoBehaviour
 {
     public GameObject proton;
     public GameObject neutron;
     public GameObject electron;
-   
+
+    public Text inputText;
+    public Text userAlertsText;
+
+    private GameObject atomicParent;
+
     string[] atomNames =
     {
         "gold",
@@ -30,10 +36,8 @@ public class AtomCreator : MonoBehaviour
         new Vector2Int(92, 238), // uranium
     };
 
-    string userInput = "gold";
-
     Vector2 vector2 = new Vector2(1, 1);
-
+    public object neutronCount;
 
     // Update is called once per frame
     void Update()
@@ -42,27 +46,41 @@ public class AtomCreator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             int arrayIndex = -1;
-            for(int x = 0; x<atomNames.Length; x++)
+            // Return a number in thr arrayIndex if it has found the atom in the array
+            for(int x = 0; x < atomNames.Length; x++)
             {
-                if(userInput==atomNames[x])
+                if(inputText.text == atomNames[x])
                 {
                     arrayIndex = x;
                 }
             }
 
+            // tell the user that the element is not in our array
+            if (arrayIndex < 0)
+            {
+                userAlertsText.text = inputText.text + " element you searched was not in our list. Please Try something else.";
+                return;
+            }
+
+            Destroy(atomicParent);
+            atomicParent = new GameObject("Atomic Parent");
 
             for (int x = 0; x < elementInformation[arrayIndex].x; x++)
             {
                 // protons
                 GameObject reference = Instantiate(proton);
                 reference.transform.position = Random.insideUnitSphere * Mathf.Log(elementInformation[arrayIndex].x) / 2;
+                reference.transform.SetParent(atomicParent.transform);
             }
 
-            for (int x = 0; x < elementInformation[arrayIndex].y - elementInformation[arrayIndex].x; x++)
+            int neutronCount = elementInformation[arrayIndex].y - elementInformation[arrayIndex].x;
+               // neutron
+            for (int x = 0; x < neutronCount; x++)
             {
-                // neutrons
+                
                GameObject reference = Instantiate(neutron);
-                reference.transform.position = Random.insideUnitSphere * Mathf.Log(elementInformation[arrayIndex].y - elementInformation[arrayIndex].x) / 2;
+               reference.transform.position = Random.insideUnitSphere * Mathf.Log(elementInformation[arrayIndex].y - elementInformation[arrayIndex].x) / 2;
+               reference.transform.SetParent(atomicParent.transform);
             }
 
             for (int x = 0; x < elementInformation[arrayIndex].x; x++)
@@ -71,8 +89,13 @@ public class AtomCreator : MonoBehaviour
                 GameObject reference = Instantiate(electron);
                 reference.transform.GetChild(0).transform.position = new Vector3(Mathf.Log(elementInformation[arrayIndex].x), 0, 0);
                 reference.transform.Rotate(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f));
-
+                reference.transform.SetParent(atomicParent.transform);
             }
+
+            Debug.Log("array index: " + arrayIndex);
+            Debug.Log(atomNames[arrayIndex]);
+            Debug.Log(elementInformation[arrayIndex].x);
+            Debug.Log(neutronCount);
         }
     }
 }
